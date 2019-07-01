@@ -65,4 +65,4 @@ config.js
 
 # Mac OS file(s)
 *.DS_Store
-011-Node-Weather-Web-Server/public/.DS_Store
+012-Task-Manager/public/.DS_Store
