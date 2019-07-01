@@ -1,0 +1,12 @@
+{
+  "name": "012-Task-Manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {},
+  "author": "Dean Murray",
+  "license": "Private",
+  "dependencies": {
+    "mongodb": "^3.2.7"
+  }
+}
