@@ -11,21 +11,39 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
 
     const db = client.db(databaseName);
 
-    db.collection('tasks').insertMany([{
-        description: 'Watch videos',
-        completed: false
-    },{
-        description: 'Find a place to live',
-        completed: false
-    },{
-        description: 'Ruin something',
-        completed: true
-    }], (error, result)=>{
-        if(error) {
-            return console.log('Error! Unable to insert the tasks!')
-        }
+    // db.collection('users').insertMany([
+    //     {
+    //         user: DelayNode,
+    //         age: 42
+    //     }, {
+    //         user: Laynie,
+    //         age: 7
+    //     }
+    // ], (error, result) => {
+    //     if(error) {
+    //         return console.log('Unable to insert users');
+    //     }
 
-        console.log(result.ops);
-    })
+    //     console.log(result.ops);
+    // })
+
+    // db.collection('tasks').insertMany([
+    //     {
+    //         description: 'Watch videos',
+    //         completed: false
+    //     },{
+    //         description: 'Find a place to live',
+    //         completed: false
+    //     },{
+    //         description: 'Ruin something',
+    //         completed: true
+    //     }
+    // ], (error, result)=>{
+    //     if(error) {
+    //         return console.log('Error! Unable to insert the tasks!')
+    //     }
+
+    //     console.log(result.ops);
+    // })
 
 });
