@@ -47,20 +47,20 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     // })
 
     // INSERT MANY
-    // db.collection('tasks').insertMany([
+    // db.collection('users').insertMany([
     //     {
-    //         description: 'Watch videos',
-    //         completed: false
+    //         name: 'Bob',
+    //         age: 1 
     //     },{
-    //         description: 'Find a place to live',
-    //         completed: false
+    //         name: 'Bob',
+    //         age: 2
     //     },{
-    //         description: 'Ruin something',
-    //         completed: true
+    //         name: 'Bob',
+    //         age: 3
     //     }
     // ], (error, result)=>{
     //     if(error) {
-    //         return console.log('Error! Unable to insert the tasks!')
+    //         return console.log('Error! Unable to insert the users!')
     //     }
 
     //     console.log(result.ops);
@@ -133,14 +133,21 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     // })
 
     //DELETE ONE USER
-    db.collection('users').deleteOne({
-        name: 'Bob'
+    // db.collection('users').deleteOne({
+    //     name: 'Bob'
+    // }).then((result) => {
+    //     console.log(`${result.deletedCount} records have been deleted`);
+    // }).catch((error) => {
+    //     console.log(error);
+    // })
+
+    //DELETE ANY USER OLD ENOUGH TO KNOW BETTER
+    db.collection('users').deleteMany({
+        name: "Bob"
     }).then((result) => {
         console.log(`${result.deletedCount} records have been deleted`);
     }).catch((error) => {
         console.log(error);
     })
-
-    //DELETE ANY USER OLD ENOUGH TO KNOW BETTER
 
 });
