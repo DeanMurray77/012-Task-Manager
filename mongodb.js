@@ -67,30 +67,43 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     // })
 
     //FIND A SPECIFIC TASK BY ID
-    db.collection('tasks').findOne({_id: new ObjectID('5d1c139151900e4806f234f9')}, (error, task) => {
-        if(error) {
-            return console.log("Unable to query task");
-        }
+    // db.collection('tasks').findOne({_id: new ObjectID('5d1c139151900e4806f234f9')}, (error, task) => {
+    //     if(error) {
+    //         return console.log("Unable to query task");
+    //     }
 
-        if(!task) {
-            return console.log("No such task found")
-        }
+    //     if(!task) {
+    //         return console.log("No such task found")
+    //     }
 
-        console.log(task);
-    })
+    //     console.log(task);
+    // })
 
     //FIND ALL OF THE UNCOMPLETED TASKS
-    db.collection('tasks').find({completed: false}).toArray((error, tasks) => {
-        if(error) {
-            return console.log("Unable to query tasks");
-        }
+    // db.collection('tasks').find({completed: false}).toArray((error, tasks) => {
+    //     if(error) {
+    //         return console.log("Unable to query tasks");
+    //     }
 
-        if(tasks.length === 0) {
-            return console.log("No tasks found for that criteria");
-        }
+    //     if(tasks.length === 0) {
+    //         return console.log("No tasks found for that criteria");
+    //     }
 
-        console.log("Uncompleted tasks:")
-        console.log(tasks);
+    //     console.log("Uncompleted tasks:")
+    //     console.log(tasks);
+    // })
+
+    //UPDATE ONE USER
+    db.collection('users').updateOne({
+        _id: new ObjectID('5d1be167011737457c03449b')
+    }, {
+        $set: {
+            name: 'Melissa'
+        }
+    }).then((result) => {
+        console.log(result);
+    }).catch((error) => {
+        console.log(error);
     })
 
 });
