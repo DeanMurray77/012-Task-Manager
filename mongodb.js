@@ -3,11 +3,6 @@ const { MongoClient, ObjectID} = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager';
 
-const id = new ObjectID();
-console.log(id);
-console.log(id.getTimestamp());
-
-
 MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     if(error) {
         return console.log("Error, unable to connect to database. " + error);
@@ -15,17 +10,29 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
 
     const db = client.db(databaseName);
 
-    db.collection('users').insertOne({
-        name: 'Bob',
-        age: 42
-    }, (error, result) => {
+    // FIND USER
+    db.collection('users').findOne({name: 'Katie'}, (error, user)=> {
         if(error) {
-            return console.log('Unable to insert users');
+            return console.log("Unable to find that user");
         }
 
-        console.log(result.ops);
+        console.log(user);
     })
 
+
+    // INSERT ONE
+    // db.collection('users').insertOne({
+    //     name: 'Karm',
+    //     age: 'Old enough to know better'
+    // }, (error, result) => {
+    //     if(error) {
+    //         return console.log('Unable to insert users');
+    //     }
+
+    //     console.log(result.ops);
+    // })
+
+    // INSERT MANY
     // db.collection('tasks').insertMany([
     //     {
     //         description: 'Watch videos',
