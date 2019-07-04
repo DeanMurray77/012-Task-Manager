@@ -119,6 +119,28 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     console.log("Error: " + error);
     // })
 
-    
+    //UPDATE MANY TASKS (COMPLETED)
+    // db.collection('tasks').updateMany({
+    //     completed: false
+    // }, {
+    //     $set: {
+    //         completed: true
+    //     }
+    // }).then((result) => {
+    //     console.log(`${result.modifiedCount} record(s) have been modified`);
+    // }).catch((error) => {
+    //     console.log("Error: " + error);
+    // })
+
+    //DELETE ONE USER
+    db.collection('users').deleteOne({
+        name: 'Bob'
+    }).then((result) => {
+        console.log(`${result.deletedCount} records have been deleted`);
+    }).catch((error) => {
+        console.log(error);
+    })
+
+    //DELETE ANY USER OLD ENOUGH TO KNOW BETTER
 
 });
