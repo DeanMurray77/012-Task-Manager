@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "Dean Murray",
   "license": "Private",
   "dependencies": {
-    "mongodb": "^3.2.7"
+    "mongodb": "^3.2.7",
+    "mongoose": "^5.6.3"
   }
 }
