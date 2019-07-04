@@ -93,17 +93,32 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     console.log(tasks);
     // })
 
-    //UPDATE ONE USER
-    db.collection('users').updateOne({
-        _id: new ObjectID('5d1be167011737457c03449b')
-    }, {
-        $set: {
-            name: 'Melissa'
-        }
-    }).then((result) => {
-        console.log(result);
-    }).catch((error) => {
-        console.log(error);
-    })
+    //UPDATE ONE USER (NAME)
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID('5d1be167011737457c03449b')
+    // }, {
+    //     $set: {
+    //         name: 'Melissa'
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((error) => {
+    //     console.log(error);
+    // })
+
+    //UPDATE ONE USER (AGE)
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID('5d1be167011737457c03449b')
+    // }, {
+    //     $inc: {
+    //         age: -1
+    //     }
+    // }).then((result) => {
+    //     console.log(`${result.modifiedCount} record(s) have been modified`);
+    // }).catch((error) => {
+    //     console.log("Error: " + error);
+    // })
+
+    
 
 });
