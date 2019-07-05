@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
-    useNewURLParser: true,
+    useNewUrlParser: true,
     useCreateIndex: true    
 });
 
@@ -12,4 +12,11 @@ const User = mongoose.model('User', {
     age: {
         type: Number
     }
+});
+
+const me = new User({name: 'Dean', age: 42});
+me.save().then((result) => {
+    console.log(me);
+}).catch((error) => {
+    console.log(error);
 });
