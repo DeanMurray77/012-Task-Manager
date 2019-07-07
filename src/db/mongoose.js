@@ -5,37 +5,46 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useCreateIndex: true    
 });
 
-// const User = mongoose.model('User', {
-//     name: {
-//         type: String
-//     },
-//     age: {
-//         type: Number
-//     }
-// });
-
-// const me = new User({name: 'Dean', age: 42});
-
-// me.save().then((result) => {
-//     console.log(me);
-// }).catch((error) => {
-//     console.log(error);
-// });
-
-const Task = mongoose.model('Task', {
-    description: {
+const User = mongoose.model('User', {
+    name: {
         type: String,
         required: true
     },
-    completed: {
-        type: Boolean
+    age: {
+        type: Number,
+        validate(value) {
+            if (value < 0) {
+                throw new Error('Age must be a positive number');
+            }
+        }
     }
-})
+});
 
-const task = new Task({completed: false});
+const me = new User({
+    name: 'Peter',
+    age: -2
+});
 
-task.save().then(() => {
-    console.log(task);
+me.save().then((result) => {
+    console.log(me);
 }).catch((error) => {
     console.log(error);
-})
+});
+
+// const Task = mongoose.model('Task', {
+//     description: {
+//         type: String,
+//         required: true
+//     },
+//     completed: {
+//         type: Boolean
+//     }
+// })
+
+// const task = new Task({description: 'Find House', completed: false});
+
+// task.save().then(() => {
+//     console.log(task);
+// }).catch((error) => {
+//     console.log(error);
+// })
