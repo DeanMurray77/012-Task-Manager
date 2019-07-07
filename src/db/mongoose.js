@@ -24,17 +24,18 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 
 const Task = mongoose.model('Task', {
     description: {
-        type: String
+        type: String,
+        required: true
     },
     completed: {
         type: Boolean
     }
 })
 
-const task = new Task({description: 'Find House', completed: false});
+const task = new Task({completed: false});
 
-task.save().then((result) => {
-    console.log(result);
+task.save().then(() => {
+    console.log(task);
 }).catch((error) => {
     console.log(error);
 })
