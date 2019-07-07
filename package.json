@@ -8,6 +8,7 @@
   "license": "Private",
   "dependencies": {
     "mongodb": "^3.2.7",
-    "mongoose": "^5.6.3"
+    "mongoose": "^5.6.3",
+    "validator": "^11.1.0"
   }
 }
