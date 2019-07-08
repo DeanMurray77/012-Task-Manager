@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js -e hbs,js"
+  },
   "author": "Dean Murray",
   "license": "Private",
   "dependencies": {
+    "express": "^4.17.1",
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.3",
     "validator": "^11.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
