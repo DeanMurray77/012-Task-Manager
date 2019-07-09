@@ -10,6 +10,7 @@ app.get('', (req, res) => {
 })
 
 app.post('/users', (req, res) => {
+    console.log(req.body);
     res.send("testing post users");
 })
 
