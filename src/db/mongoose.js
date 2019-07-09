@@ -32,12 +32,12 @@ const Task = mongoose.model('Task', {
     }
 })
 
-const task = new Task({
-    description: '   Finish Course    '
-});
+// const task = new Task({
+//     description: '   Finish Course    '
+// });
 
-task.save().then(() => {
-    console.log(task);
-}).catch((error) => {
-    console.log(error);
-})
+// task.save().then(() => {
+//     console.log(task);
+// }).catch((error) => {
+//     console.log(error);
+// })
