@@ -2,6 +2,7 @@ const express = require('express');
 
 require('./db/mongoose'); //ensures that mongoose.js runs and we connect to the db
 const User = require('./models/user');
+const Task = require('./models/task');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,8 +23,15 @@ app.post('/users', (req, res) => {
     })
 })
 
-app.get('/tasks', (req, res) => {
-    res.send('Working...');
+app.post('/tasks', (req, res) => {
+    const task = new Task(req.body);
+
+    console.log(req.body);
+    task.save().then(() => {
+        res.send(task);
+    }).catch((error) => {
+        res.status('400').send(error);
+    })
 })
 
 app.listen(port, () => {
