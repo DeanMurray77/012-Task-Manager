@@ -26,7 +26,6 @@ app.post('/users', (req, res) => {
 app.post('/tasks', (req, res) => {
     const task = new Task(req.body);
 
-    console.log(req.body);
     task.save().then(() => {
         res.send(task);
     }).catch((error) => {
