@@ -7,31 +7,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 });
 
 
-
-// const me = new User({
-//     name: '  Peter    ',
-//     email: '    a@a.com    ',
-//     password: '       1234567898     '
-// });
-
-// me.save().then((result) => {
-//     console.log(me);
-// }).catch((error) => {
-//     console.log(error);
-// });
-
-const Task = mongoose.model('Task', {
-    description: {
-        type: String,
-        trim: true,
-        required: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    }
-})
-
 // const task = new Task({
 //     description: '   Finish Course    '
 // });
