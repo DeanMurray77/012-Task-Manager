@@ -25,18 +25,6 @@ app.post('/users', async (req, res) => {
     }
 })
 
-// Create a new task
-app.post('/tasks', async (req, res) => {
-    const task = new Task(req.body);
-
-    try {
-        await task.save();
-        res.status(201).send(task);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-})
-
 // Return a list of users
 app.get('/users', async (req, res) => {
 
@@ -63,6 +51,18 @@ app.get('/users/:id', async (req, res) => {
 
     } catch (error) {
         res.status(500).send();
+    }
+})
+
+// Create a new task
+app.post('/tasks', async (req, res) => {
+    const task = new Task(req.body);
+
+    try {
+        await task.save();
+        res.status(201).send(task);
+    } catch (error) {
+        res.status(400).send(error);
     }
 })
 
