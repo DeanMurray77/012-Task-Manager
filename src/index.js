@@ -13,14 +13,16 @@ app.get('', (req, res) => {
     res.send("Nothing here, but it's working...");
 })
 
-app.post('/users', (req, res) => {
+// Create a new user
+app.post('/users', async (req, res) => {
     const user = new User(req.body);
 
-    user.save().then(() => {
+    try {
+        await user.save();
         res.status(201).send(user);
-    }).catch((error) => {
-        res.status('400').send(error);
-    })
+    } catch (e) {
+        res.status(400).send(error);
+    }
 })
 
 app.post('/tasks', (req, res) => {
@@ -33,6 +35,7 @@ app.post('/tasks', (req, res) => {
     })
 })
 
+// Return a list of users
 app.get('/users', (req, res) => {
     User.find({}).then((users) => {
         res.send(users);
