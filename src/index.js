@@ -73,7 +73,7 @@ app.get('/tasks', async (req, res) => {
         const tasks = await Task.find({});
         res.send(tasks);        
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send();
     }
 })
 
@@ -90,7 +90,7 @@ app.get('/tasks/:id', async (req, res) => {
 
         res.send(task);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send();
     }
 })
 
