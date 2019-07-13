@@ -36,16 +36,24 @@ app.post('/tasks', (req, res) => {
 })
 
 // Return a list of users
-app.get('/users', (req, res) => {
-    User.find({}).then((users) => {
+app.get('/users', async (req, res) => {
+
+    try {
+        const users = await User.find({});
         res.send(users);
-    }).catch((error) => {
-        res.status(500).send();
-    })
+    } catch (error) {
+        res.status(500).send(error);        
+    }
 })
 
-app.get('/users/:id', (req, res) => {
+app.get('/users/:id', async (req, res) => {
     const _id = req.params.id;
+
+    try {
+        
+    } catch (error) {
+        
+    }
 
     User.findById(_id).then((user) => {
         if(!user) {
