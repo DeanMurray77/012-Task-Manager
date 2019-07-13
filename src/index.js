@@ -25,14 +25,16 @@ app.post('/users', async (req, res) => {
     }
 })
 
-app.post('/tasks', (req, res) => {
+// Create a new task
+app.post('/tasks', async (req, res) => {
     const task = new Task(req.body);
 
-    task.save().then(() => {
+    try {
+        await task.save();
         res.status(201).send(task);
-    }).catch((error) => {
-        res.status('400').send(error);
-    })
+    } catch (error) {
+        res.status(400).send(error);
+    }
 })
 
 // Return a list of users
