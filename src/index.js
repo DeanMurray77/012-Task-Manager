@@ -66,12 +66,15 @@ app.get('/users/:id', async (req, res) => {
     }
 })
 
-app.get('/tasks', (req, res) => {
-    Task.find({}).then((tasks) => {
-        res.send(tasks);
-    }).catch((e) => {
-        res.status(500).send(e);
-    })
+// Return a list of all tasks
+app.get('/tasks', async (req, res) => {
+
+    try {
+        const tasks = await Task.find({});
+        res.send(tasks);        
+    } catch (error) {
+        res.status(500).send(error);
+    }
 })
 
 app.get('/tasks/:id', (req, res) => {
