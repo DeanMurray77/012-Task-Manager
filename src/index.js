@@ -60,7 +60,7 @@ app.get('/users/:id', async (req, res) => {
         res.send(user);
 
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send();
     }
 })
 
