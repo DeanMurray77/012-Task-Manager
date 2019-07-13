@@ -50,20 +50,17 @@ app.get('/users/:id', async (req, res) => {
     const _id = req.params.id;
 
     try {
-        
-    } catch (error) {
-        
-    }
+        const user = await User.findById(_id);
 
-    User.findById(_id).then((user) => {
         if(!user) {
             return res.status(404).send();
         }
 
         res.send(user);
-    }).catch((e) => {
-        res.status(500).send(e);
-    })
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
 })
 
 app.get('/tasks', (req, res) => {
