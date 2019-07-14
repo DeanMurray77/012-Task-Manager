@@ -60,6 +60,7 @@ app.patch('/users/:id', async (req, res) => {
     const allowedUpdates = ["name", "email", "password", "age"];
 
     const isValidOperation = updates.every((update) => {
+        //!isValidOperation unless all items in updates is in allowedUpdates.
         return allowedUpdates.includes(update);
     })
 
@@ -118,6 +119,36 @@ app.get('/tasks/:id', async (req, res) => {
 
         res.send(task);
     } catch (error) {
+        res.status(500).send();
+    }
+})
+
+app.patch('/tasks/:id', async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['completed', 'description'];
+
+    const isValidOperation = updates.every((update) => {
+        return allowedUpdates.includes(update);
+    })
+
+    if(!isValidOperation) {
+        let message = "Error: Illegal update attribute passed. ";
+        message += "Allowed attributes are: ";
+        message += allowedUpdates;
+        return res.status(400).send(message);
+    }
+
+    const _id = req.params.id;
+
+    try {
+        const task = await Task.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true });
+
+        if(!task) {
+            return res.status(404).send();
+        }
+
+        res.send(task);
+    } catch (e) {
         res.status(500).send();
     }
 })
