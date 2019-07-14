@@ -56,6 +56,17 @@ app.get('/users/:id', async (req, res) => {
 
 // Update a user
 app.patch('/users/:id', async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ["name", "email", "password", "age"];
+
+    const isValidOperation = updates.every((update) => {
+        return allowedUpdates.includes(update);
+    })
+
+    if (!isValidOperation) {
+        return res.status(400).send(`Illegal update attribute passed. Allowed attributes are: ${allowedUpdates}`);
+    }
+
     const _id = req.params.id;
 
     try {
