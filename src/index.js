@@ -54,6 +54,23 @@ app.get('/users/:id', async (req, res) => {
     }
 })
 
+// Update a user
+app.patch('/users/:id', async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+        const newUser = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true});
+
+        if(!newUser) { // No such user to update
+            return res.status(404).send();
+        }
+
+        res.send(newUser); // Successful update
+    } catch (e) { // Validation error, or database connection error
+        res.status(400).send();
+    }
+})
+
 // Create a new task
 app.post('/tasks', async (req, res) => {
     const task = new Task(req.body);
