@@ -96,7 +96,7 @@ app.delete('/users/:id', async (req, res) => {
 
         res.send(user);
     } catch (e) {
-        res.status(400).send(e);
+        res.status(500).send(e);
     }
 })
 
