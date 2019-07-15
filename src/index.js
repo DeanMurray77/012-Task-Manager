@@ -140,6 +140,7 @@ app.get('/tasks/:id', async (req, res) => {
     }
 })
 
+// Update a task
 app.patch('/tasks/:id', async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = ['completed', 'description'];
@@ -167,6 +168,23 @@ app.patch('/tasks/:id', async (req, res) => {
         res.send(task);
     } catch (e) {
         res.status(400).send();
+    }
+})
+
+//Delete a task by ID
+app.delete('/tasks/:id', async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+        const task = await Task.findByIdAndDelete(_id);
+
+        if(!task) {
+            return res.status(404).send();
+        }
+
+        res.send(task);
+    } catch (e) {
+        res.status(500).send(e);        
     }
 })
 
