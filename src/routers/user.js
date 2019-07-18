@@ -93,7 +93,16 @@ router.delete('/users/:id', async (req, res) => {
 
         res.send(user);
     } catch (e) {
-        res.status(500).send(e);
+        res.status(500).send();
+    }
+})
+
+// Authenticate a user
+router.post('/users/login', async (req, res) => {
+    try {
+        const user = await User.findByCredential(req.body.email, req.body.password);
+    } catch (e) {
+        res.status(404).send();
     }
 })
 
