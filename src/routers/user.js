@@ -101,6 +101,9 @@ router.delete('/users/:id', async (req, res) => {
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredential(req.body.email, req.body.password);
+        // An error is thrown by findByCredential if the user can't be matched and password confirmed
+        res.send(user); //Temp solution. Needs changed.
+
     } catch (e) {
         res.status(404).send();
     }
