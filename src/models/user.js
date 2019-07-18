@@ -41,6 +41,23 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.statics.findByCredential = async (email, password) => {
+    const user = await User.findOne({email: email});
+
+    if(!user) {
+        throw new Error("Unable to login");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(isMatch) {
+        return true;
+    } else {
+        throw new Error("Unable to login");
+    }
+}
+
+// Hash plaintext passwork middleware
 userSchema.pre('save', async function (next) {
     const user = this;
 
