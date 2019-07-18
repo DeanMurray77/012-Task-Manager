@@ -105,7 +105,7 @@ router.post('/users/login', async (req, res) => {
         res.send(user); //Temp solution. Needs changed.
 
     } catch (e) {
-        res.status(404).send();
+        res.status(400).send();
     }
 })
 
