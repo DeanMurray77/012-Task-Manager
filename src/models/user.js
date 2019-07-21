@@ -40,7 +40,13 @@ const userSchema = new mongoose.Schema({
                 throw new Error("The password must not contain 'password'");
             }
         }
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 });
 
 userSchema.methods.generateAuthToken = async function () {
