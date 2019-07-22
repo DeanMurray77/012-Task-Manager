@@ -59,7 +59,7 @@ userSchema.methods.generateAuthToken = async function () {
     //.push should have worked, but mongoose fumbles that for some reason...
 
     await user.save();
-    return token;        
+    return token;
 }
 
 userSchema.statics.findByCredential = async (email, password) => {
