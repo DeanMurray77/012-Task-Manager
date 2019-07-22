@@ -9,6 +9,10 @@ const taskRouter = require('./routers/task');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use((req, res, next) => {
+    console.log(req.method, req.path);
+})
+
 // Options
 app.use(express.json());
 app.use(userRouter);
