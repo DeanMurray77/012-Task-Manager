@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 
 const auth = require('../middleware/auth');
+const demo = require('../middleware/demo');
 
 // Import Model
 const User = require('../models/user');
@@ -20,7 +21,7 @@ router.post('/users', async (req, res) => {
 })
 
 // Return a list of users
-router.get('/users', auth, async (req, res) => {
+router.get('/users', auth, demo, async (req, res) => {
     try {
         const users = await User.find({});
         res.send(users);
