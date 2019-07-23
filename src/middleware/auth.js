@@ -1,8 +1,16 @@
-const auth = async (req, res, next) => {
-    console.log("Header Info: " + JSON.stringify(req.headers));
-    console.log(req.headers.authorization);
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-    next();
+const auth = async (req, res, next) => {
+    try {
+        const token = req.header('Authorization').replace("Bearer ", '');
+        console.log("Token: " + token);
+        const isMatch = jwt.verify(token, 'secret');
+        console.log("Is match? " + JSON.stringify(isMatch));
+        next();        
+    } catch (e) {
+        res.status(401).send({error: 'Please authenticate'});
+    }
 }
 
 module.exports = auth
