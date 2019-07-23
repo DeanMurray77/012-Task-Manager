@@ -17,6 +17,11 @@ app.use((req, res, next) => {
     }
 })
 
+//Maintenance Mode
+app.use((req, res, next) => {
+    res.status(503).send("The site is undergoing maintenance. Please check back soon.");
+})
+
 // Options
 app.use(express.json());
 app.use(userRouter);
