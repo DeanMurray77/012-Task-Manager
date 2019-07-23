@@ -1,5 +1,6 @@
 const auth = async (req, res, next) => {
-    console.log("async middleware running");
+    console.log("Header Info: " + JSON.stringify(req.headers));
+    console.log(req.headers.authorization);
 
     next();
 }
