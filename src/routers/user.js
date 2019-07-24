@@ -19,6 +19,38 @@ router.post('/users', async (req, res) => {
     }
 })
 
+// Authenticate (log in) a user
+router.post('/users/login', async (req, res) => {
+    try {
+        req.user
+        
+        const user = await User.findByCredential(req.body.email, req.body.password);
+        // An error is thrown by findByCredential if the user can't be matched and password confirmed
+
+        const token = await user.generateAuthToken();
+
+        res.send( {user, token} ); //Temp solution. Needs changed.
+
+    } catch (e) {
+        res.status(400).send();
+    }
+})
+
+// Log out a user:
+router.post('/users/logout', auth, async (req,res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token;
+        })
+
+        await req.user.save();
+
+        res.send();
+    } catch (e) {
+        res.status(500).send();
+    }
+})
+
 // Return a list of users
 router.get('/users/me', auth, async (req, res) => {
     try {
@@ -95,21 +127,6 @@ router.delete('/users/:id', async (req, res) => {
         res.send(user);
     } catch (e) {
         res.status(500).send();
-    }
-})
-
-// Authenticate (log in) a user
-router.post('/users/login', async (req, res) => {
-    try {
-        const user = await User.findByCredential(req.body.email, req.body.password);
-        // An error is thrown by findByCredential if the user can't be matched and password confirmed
-
-        const token = await user.generateAuthToken();
-
-        res.send( {user, token} ); //Temp solution. Needs changed.
-
-    } catch (e) {
-        res.status(400).send();
     }
 })
 

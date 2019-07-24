@@ -15,6 +15,7 @@ const auth = async (req, res, next) => {
         }
 
         req.user = user; //so route doesn't have to lookup the user
+        req.token = token; //so logout route knows which token to delete
         next();
     } catch (e) {
         res.status(401).send({error: 'Please authenticate'});
