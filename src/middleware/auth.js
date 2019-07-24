@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace("Bearer ", '');
         const decoded = jwt.verify(token, 'secret'); //returns the id, iat and exp if decodes
-        const user = User.findOne({
+        const user = await User.findOne({
             _id: decoded._id,
             'tokens.token': token
         })
@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
         }
 
         req.user = user; //so route doesn't have to lookup the user
-        next();        
+        next();
     } catch (e) {
         res.status(401).send({error: 'Please authenticate'});
     }

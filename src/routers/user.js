@@ -20,10 +20,9 @@ router.post('/users', async (req, res) => {
 })
 
 // Return a list of users
-router.get('/users', auth, async (req, res) => {
+router.get('/users/me', auth, async (req, res) => {
     try {
-        const users = await User.find({});
-        res.send(users);
+        res.send(req.user);
     } catch (error) {
         res.status(500).send();        
     }
