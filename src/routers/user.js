@@ -72,7 +72,7 @@ router.get('/users/me', auth, async (req, res) => {
 })
 
 // Update a user
-router.patch('/users/:id', async (req, res) => {
+router.patch('/users/update',auth,  async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = ["name", "email", "password", "age"];
 
@@ -88,19 +88,15 @@ router.patch('/users/:id', async (req, res) => {
     const _id = req.params.id;
 
     try {
-        const user = await User.findById(_id);
-
-        if(!user) { // No such user to update
-            return res.status(404).send();
-        }
+        const user = req.user;
 
         updates.forEach((update) => {
-            user[update] = req.body[update];
+            req.user[update] = req.body[update];
         })
 
-        await user.save();
+        await req.user.save();
 
-        res.send(user); // Successful update
+        res.send(req.user); // Successful update
     } catch (e) { // Validation error, or database connection error
         res.status(400).send();
     }
