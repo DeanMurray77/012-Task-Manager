@@ -62,6 +62,19 @@ userSchema.methods.generateAuthToken = async function () {
     return token;
 }
 
+userSchema.methods.getPublicProfile = function() {
+    const user = this;
+
+    //We treat user like an object, but it's not actually a normal object. We have to convert it
+    //to something that we can work with.
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+
+    return userObject;
+}
+
 userSchema.statics.findByCredential = async (email, password) => {
     const user = await User.findOne({email: email});
 

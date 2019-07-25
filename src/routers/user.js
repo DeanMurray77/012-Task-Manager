@@ -13,7 +13,7 @@ router.post('/users', async (req, res) => {
     try {
         await user.save();
         const token = await user.generateAuthToken();
-        res.status(201).send({ user, token });
+        res.status(201).send({ user: user.getPublicProfile(), token });
     } catch (error) {
         res.status(400).send(error);
     }
@@ -22,21 +22,19 @@ router.post('/users', async (req, res) => {
 // Authenticate (log in) a user
 router.post('/users/login', async (req, res) => {
     try {
-        req.user
-        
-        const user = await User.findByCredential(req.body.email, req.body.password);
+       const user = await User.findByCredential(req.body.email, req.body.password);
         // An error is thrown by findByCredential if the user can't be matched and password confirmed
 
         const token = await user.generateAuthToken();
 
-        res.send( {user, token} ); //Temp solution. Needs changed.
+        res.send( {user: user.getPublicProfile(), token} ); //Temp solution. Needs changed.
 
     } catch (e) {
         res.status(400).send();
     }
 })
 
-// Log out a user:
+// Log out a user (1 token removed)
 router.post('/users/logout', auth, async (req,res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
@@ -50,6 +48,19 @@ router.post('/users/logout', auth, async (req,res) => {
         res.status(500).send();
     }
 })
+
+// Log out a user (all tokens removed)
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        req.user.tokens = [];
+        await req.user.save();
+
+        res.send();
+    } catch (e) {
+        res.status(500).send();
+    }
+})
+
 
 // Return a list of users
 router.get('/users/me', auth, async (req, res) => {
