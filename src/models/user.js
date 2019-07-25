@@ -62,7 +62,7 @@ userSchema.methods.generateAuthToken = async function () {
     return token;
 }
 
-userSchema.methods.getPublicProfile = function() {
+userSchema.methods.toJSON = function() {
     const user = this;
 
     //We treat user like an object, but it's not actually a normal object. We have to convert it

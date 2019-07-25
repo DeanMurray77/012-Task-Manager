@@ -13,7 +13,7 @@ router.post('/users', async (req, res) => {
     try {
         await user.save();
         const token = await user.generateAuthToken();
-        res.status(201).send({ user: user.getPublicProfile(), token });
+        res.status(201).send({ user, token });
     } catch (error) {
         res.status(400).send(error);
     }
@@ -27,7 +27,7 @@ router.post('/users/login', async (req, res) => {
 
         const token = await user.generateAuthToken();
 
-        res.send( {user: user.getPublicProfile(), token} ); //Temp solution. Needs changed.
+        res.send( { user, token } ); //Temp solution. Needs changed.
 
     } catch (e) {
         res.status(400).send();
