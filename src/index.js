@@ -21,15 +21,3 @@ app.get('', (req, res) => {
 app.listen(port, () => {
     console.log("Server is up on port " + port);
 })
-
-const pet = {
-    name: 'Caleb'
-}
-
-pet.toJSON = () => {
-    this.name = 'Isaac';
-
-    return this;
-}
-
-console.log(JSON.stringify(pet));
