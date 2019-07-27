@@ -9,9 +9,8 @@ const Task = require('../models/task');
 // Create a new task
 router.post('/tasks', auth, async (req, res) => {
     const task = new Task({
-       owner: req.user._id,
-       description: req.body.description,
-       completed: req.body.completed 
+        ...req.body,
+        owner: req.user._id
     })
 
     try {
