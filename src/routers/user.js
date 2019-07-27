@@ -62,7 +62,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 
-// Return a list of users
+// Return user's profile
 router.get('/users/me', auth, async (req, res) => {
     try {
         res.send(req.user);
@@ -71,8 +71,8 @@ router.get('/users/me', auth, async (req, res) => {
     }
 })
 
-// Update a user
-router.patch('/users/update',auth,  async (req, res) => {
+// Update user's profile
+router.patch('/users/me',auth,  async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = ["name", "email", "password", "age"];
 
@@ -85,11 +85,7 @@ router.patch('/users/update',auth,  async (req, res) => {
         return res.status(400).send(`Illegal update attribute passed. Allowed attributes are: ${allowedUpdates}`);
     }
 
-    const _id = req.params.id;
-
     try {
-        const user = req.user;
-
         updates.forEach((update) => {
             req.user[update] = req.body[update];
         })
