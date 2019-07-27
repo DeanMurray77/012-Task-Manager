@@ -1,12 +1,18 @@
 const express = require('express');
 const router = new express.Router();
 
+const auth = require('../middleware/auth');
+
 // Import Model
 const Task = require('../models/task');
 
 // Create a new task
-router.post('/tasks', async (req, res) => {
-    const task = new Task(req.body);
+router.post('/tasks', auth, async (req, res) => {
+    const task = new Task({
+       owner: req.user._id,
+       description: req.body.description,
+       completed: req.body.completed 
+    })
 
     try {
         await task.save();
