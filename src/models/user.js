@@ -49,6 +49,12 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
 userSchema.methods.generateAuthToken = async function () {
     //You can't use an arrow function because it's a method...
     
