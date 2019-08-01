@@ -32,7 +32,10 @@ router.get('/tasks', auth, async (req, res) => {
     try {
         await req.user.populate({
             path: 'tasks',
-            match 
+            match,
+            options: {
+                limit: 2
+            }
         }).execPopulate();
         res.send(req.user.tasks);        
     } catch (error) {
