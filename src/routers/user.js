@@ -2,9 +2,6 @@ const express = require('express');
 const multer = require('multer');
 const router = new express.Router();
 
-const upload = multer({
-    dest: 'avatars'
-})
 const auth = require('../middleware/auth');
 
 // Import Model
@@ -110,6 +107,10 @@ router.delete('/users/me', auth, async (req, res) => {
     } catch (e) {
         res.status(500).send();
     }
+})
+
+const upload = multer({
+    dest: 'avatars'
 })
 
 // Add user avatar
