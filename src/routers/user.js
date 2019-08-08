@@ -115,16 +115,11 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter(req, file, cb) {
-        const parts = file.originalname.split('.');
-        const extension = parts[parts.length -1];
-
-        if(extension === 'doc') {
-            cb(undefined, true)
-        } else if (extension === 'docx') {
-            cb(undefined, true)
-        } else {
-            cb(new Error('File must be a doc or docx.'));
+        if(!file.originalname.match(/.(jpeg|jpg|gif)$/)) {
+            return cb(new Error('File must be a picture (.jpg, .jpeg or .gif).'));
         }
+        
+        cb(undefined, true)
     }
 })
 
