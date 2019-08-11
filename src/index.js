@@ -38,6 +38,10 @@ const upload = multer({
     }
 })
 
-app.post('/upload', (req, res) => {
+const errorMiddleware = (req, res, next) => {
+    throw new Error("This isn't working");
+}
+
+app.post('/upload', errorMiddleware, (req, res) => {
     res.send();
 })
