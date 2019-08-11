@@ -44,4 +44,6 @@ const errorMiddleware = (req, res, next) => {
 
 app.post('/upload', errorMiddleware, (req, res) => {
     res.send();
+}, (error, req, res, next) => {
+    res.status(400).send();
 })
