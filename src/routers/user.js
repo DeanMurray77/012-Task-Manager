@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const sharp = require('sharp');
 const router = new express.Router();
 
 const auth = require('../middleware/auth');
@@ -124,7 +125,8 @@ const upload = multer({
 
 // Add user avatar
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
-    req.user.avatar = req.file.buffer;
+    // req.user.avatar = req.file.buffer;
+
     await req.user.save();
     
     res.send();
