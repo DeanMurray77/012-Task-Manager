@@ -21,6 +21,16 @@ const sendWelcomeEmail = (email, name) => {
     })
 }
 
+const sendCancellationEmail = (email, name) => {
+    sgMail.send({
+        to: email,
+        from: fromEmailAddress,
+        subject: "I'm sorry to see you go!",
+        text: `I've gone ahead and closed your Taskify account, ${name}, but I'm very sorry to see you go. If you have a moment, please respond back to this email and let me know what we could have done differently to keep you as a Taskify user.\n\nSincerly,\n\nDean Murray`
+    })
+}
+
 module.exports = {
-    sendWelcomeEmail
+    sendWelcomeEmail,
+    sendCancellationEmail
 };
