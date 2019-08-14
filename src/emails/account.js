@@ -16,7 +16,8 @@ const sendWelcomeEmail = (email, name) => {
         Thank you for joining, everyone here hopes that Taskify can 
         unlock a new world of productivity for you.\n\n
         Sincerely,\n\n
-        Dean`
+        Dean`,
+        html: "<p>This is the html version of the email</p>"
     })
 }
 
