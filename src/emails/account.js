@@ -20,4 +20,6 @@ const sendWelcomeEmail = (email, name) => {
     })
 }
 
-module.exports = sendWelcomeEmail;
+module.exports = {
+    sendWelcomeEmail
+};
