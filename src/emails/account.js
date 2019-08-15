@@ -1,10 +1,8 @@
 const sgMail = require('@sendgrid/mail');
 
-const config = require('../config'); //My method of storing the API key without having it end up on GitHub
-
 const fromEmailAddress = 'test@test.com';
 
-sgMail.setApiKey(config.sendgridAPIKey);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendWelcomeEmail = (email, name) => {
     sgMail.send({
