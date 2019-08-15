@@ -66,3 +66,6 @@ config.js
 # Mac OS file(s)
 *.DS_Store
 012-Task-Manager/public/.DS_Store
+
+# Environmental Variables
+config/
