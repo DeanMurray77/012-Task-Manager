@@ -66,7 +66,7 @@ userSchema.methods.generateAuthToken = async function () {
     //You can't use an arrow function because it's a method...
     
     const user = this;
-    const token = await jwt.sign({ _id: user._id.toString() }, 'secret', { expiresIn: '1 day' } );
+    const token = await jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1 day' } );
 
     user.tokens = user.tokens.concat({ token }); //token is a string, so we have to make it an object.
     //.push should have worked, but mongoose fumbles that for some reason...
