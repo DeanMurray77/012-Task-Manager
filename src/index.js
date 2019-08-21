@@ -15,7 +15,7 @@ app.use(userRouter);
 app.use(taskRouter);
 
 app.get('', (req, res) => {
-    res.send("Nothing here, but it's working...");
+    res.send("Nothing here, but it's up...");
 })
 
 app.listen(port, () => {
