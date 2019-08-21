@@ -1,11 +1,9 @@
-test('Hello World', () => {
+const math = require('../src/math');
 
-})
+test('Should calculate total with tip', () => {
+    const total = math.calculateTip(100, .03);
 
-test('This should fail', () => {
-    throw new Error('Failure!');  
-})
-
-test('second failure', () => {
-    throw new Error('fail');
+    if(total !== 103) {
+        throw new Error("Total tip should be 103. Got " + total);
+    }
 })
