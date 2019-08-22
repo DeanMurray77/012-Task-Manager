@@ -1,5 +1,5 @@
 const calculateTip = (bill, tipPercentage) => {
-    const tip = bill * tipPercentage + 2;
+    const tip = bill * tipPercentage;
     return bill + tip;
 }
 
