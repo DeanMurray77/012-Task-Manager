@@ -1,7 +1,4 @@
-const calculateTip = (bill, tipPercentage) => {
-    const tip = bill * tipPercentage;
-    return bill + tip;
-}
+const calculateTip = (bill, tipPercentage) => (bill * tipPercentage) + bill;
 
 module.exports = {
     calculateTip
