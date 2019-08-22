@@ -7,7 +7,7 @@ test('Should calculate total with tip', () => {
 })
 
 test('Calculate with no tip provided', () => {
-    const total = math.calculateTip(100);
+    const total = math.calculateTip(10);
 
-    expect(total).toBe(125);
+    expect(total).toBe(12.5);
 })
