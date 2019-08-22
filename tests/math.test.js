@@ -5,3 +5,9 @@ test('Should calculate total with tip', () => {
 
     expect(total).toBe(103);
 })
+
+test('Calculate with no tip provided', () => {
+    const total = math.calculateTip(100);
+
+    expect(total).toBe(125);
+})
