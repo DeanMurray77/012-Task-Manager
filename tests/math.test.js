@@ -23,3 +23,7 @@ test('Should convert 0 C to 32 F', () => {
 
     expect(fahrenheitTemp).toBe(32);
 })
+
+test('Async test demo', () => {
+    expect(2).toBe(1);
+})
