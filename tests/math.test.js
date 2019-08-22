@@ -36,5 +36,10 @@ test('Should add two number (Promise-based)', (done) => {
         expect(sum).toBe(4);
         done();
     })
+})
 
+test('Should add two number (Async/Await)', async (done) => {
+    const sum = await add(1, 3)
+    expect(sum).toBe(4);
+    done();
 })
