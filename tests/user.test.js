@@ -1,13 +1,17 @@
 const request = require('supertest');
 const app = require('../src/app');
+const User = require('../src/models/user');
 
-beforeEach(() => {
-    console.log('Before each')
-})
+const userOne = {
+    name: 'Mike Jones',
+    email: 'mike@mike.com',
+    password: '567What!!!'
+};
 
-afterEach(() => {
-    console.log('After each')
-})
+beforeEach(async () => {
+    await User.deleteMany(); //no arguments means that it deletes all records
+    await new User(userOne).save();
+});
 
 test('Should sign up a new user', async () => {
     await request(app).post('/users').send({
@@ -15,4 +19,11 @@ test('Should sign up a new user', async () => {
         email: 'dean@dean.com',
         password: 'MyPass777!'
     }).expect(201);
-})
+});
+
+test('Should login userOne', async () => {
+    await request(app).post('/users/login').send({
+        email: 'mike@mike.com',
+        password: '567What!!!'
+    })
+});
