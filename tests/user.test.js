@@ -8,7 +8,7 @@ const userOne = {
     password: '567What!!!'
 };
 
-beforeEach(async () => {
+beforeAll(async () => {
     await User.deleteMany(); //no arguments means that it deletes all records
     await new User(userOne).save();
 });
@@ -26,4 +26,29 @@ test('Should login existing', async () => {
         email: userOne.email,
         password: userOne.password
     }).expect(200);
+});
+
+test('Should not login non-existent user', async () => {
+    await request(app).post('/users/login').send({
+        email: 'nonExistentUSer@test.com',
+        password: 'SomethingFake'
+    }).expect(400);
+});
+
+test('Should not login user with empty creds', async () => {
+    await request(app).post('/users/login').send({
+    }).expect(400);
+});
+
+test('Should not login valid user with empty password', async () => {
+    await request(app).post('/users/login').send({
+        email: userOne.password
+    }).expect(400);
+});
+
+test('Should not login valid user with invalid password', async () => {
+    await request(app).post('/users/login').send({
+        email: userOne.password,
+        password: 'bogusPassword'
+    }).expect(400);
 });
