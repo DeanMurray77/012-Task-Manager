@@ -1,11 +1,19 @@
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const app = require('../src/app');
 const User = require('../src/models/user');
 
+const userOneId = new mongoose.Types.ObjectId();
+
 const userOne = {
+    _id: userOneId,
     name: 'Mike Jones',
     email: 'mike@mike.com',
-    password: '567What!!!'
+    password: '567What!!!',
+    tokens: [{
+        token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
+    }]
 };
 
 beforeAll(async () => {
@@ -51,4 +59,19 @@ test('Should not login valid user with invalid password', async () => {
         email: userOne.password,
         password: 'bogusPassword'
     }).expect(400);
+});
+
+test("Should get a user's profile", async () => {
+    await request(app)
+    .get('/users/me')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200);
+});
+
+test("Should not get profile when no authentication is provided", async () => {
+    await request(app)
+        .get('/users/me')
+        .send()
+        .expect(401);
 });
