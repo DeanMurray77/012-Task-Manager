@@ -16,7 +16,7 @@ const userOne = {
     }]
 };
 
-beforeAll(async () => {
+beforeEach(async () => {
     await User.deleteMany(); //no arguments means that it deletes all records
     await new User(userOne).save();
 });
@@ -75,3 +75,18 @@ test("Should not get profile when no authentication is provided", async () => {
         .send()
         .expect(401);
 });
+
+test("Should fail to delete unauthenticated user", async () => {
+    await request(app)
+        .delete('/users/me')
+        .send()
+        .expect(401); //Fails at authentication before getting into the route
+})
+
+test('Should delete user', async () => {
+    await request(app)
+        .delete('/users/me')
+        .set('Authorization', 'Bearer ' + userOne.tokens[0].token)
+        .send()
+        .expect(200);
+})
