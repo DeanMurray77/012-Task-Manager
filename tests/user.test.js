@@ -33,8 +33,14 @@ test('Should sign up a new user', async () => {
     expect(user).not.toBeNull();
 
     //Assertions about the response
-    expect(response.body.user.name).toBe('Dean Murray');
-    expect(response.body.user.email).toBe('dean@dean.com');
+    expect(response.body).toMatchObject({
+        user: {
+            name: 'Dean Murray',
+            email: 'dean@dean.com'
+        },
+        token: user.tokens[0].token
+    });
+    expect(user.password).not.toBe('MyPass777!');
 });
 
 test('Should login existing', async () => {
