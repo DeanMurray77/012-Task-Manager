@@ -49,7 +49,7 @@ test('Should login existing user', async () => {
         password: userOne.password
     }).expect(200);
 
-    const user = await User.findById(response.body.user._id);
+    const user = await User.findById(userOneId);
 
     expect(user.tokens[1].token).toBe(response.body.token);
 });
