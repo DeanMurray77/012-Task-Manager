@@ -43,11 +43,15 @@ test('Should sign up a new user', async () => {
     expect(user.password).not.toBe('MyPass777!');
 });
 
-test('Should login existing', async () => {
-    await request(app).post('/users/login').send({
+test('Should login existing user', async () => {
+    const response = await request(app).post('/users/login').send({
         email: userOne.email,
         password: userOne.password
     }).expect(200);
+
+    const user = await User.findById(response.body.user._id);
+
+    expect(user.tokens[1].token).toBe(response.body.token);
 });
 
 test('Should not login non-existent user', async () => {
