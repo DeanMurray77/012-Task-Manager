@@ -22,11 +22,19 @@ beforeEach(async () => {
 });
 
 test('Should sign up a new user', async () => {
-    await request(app).post('/users').send({
+    const response = await request(app).post('/users').send({
         name: 'Dean Murray',
         email: 'dean@dean.com',
         password: 'MyPass777!'
     }).expect(201);
+
+    //Assert that the databese was changed correctly:
+    const user = await User.findById(response.body.user._id);
+    expect(user).not.toBeNull();
+
+    //Assertions about the response
+    expect(response.body.user.name).toBe('Dean Murray');
+    expect(response.body.user.email).toBe('dean@dean.com');
 });
 
 test('Should login existing', async () => {
