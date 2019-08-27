@@ -112,3 +112,12 @@ test('Should delete user', async () => {
     const user = await User.findById(userOneId);
     expect(user).toBeNull();
 })
+
+test('Should upload an avatar image', async () => {
+    await request(app)
+        .post('/users/me/avatar')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .attach('avatar', 'tests/fixtures/profile-pic.jpg');
+
+        expect(200);
+})
