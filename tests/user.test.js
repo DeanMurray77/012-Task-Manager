@@ -107,4 +107,8 @@ test('Should delete user', async () => {
         .set('Authorization', 'Bearer ' + userOne.tokens[0].token)
         .send()
         .expect(200);
+
+    //confirm that there is no longer any such user with that ID in the database
+    const user = await User.findById(userOneId);
+    expect(user).toBeNull();
 })
