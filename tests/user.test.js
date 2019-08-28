@@ -1,25 +1,9 @@
 const request = require('supertest');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const app = require('../src/app');
 const User = require('../src/models/user');
+const { userOne, userOneId, setupDatabase } = require('./fixtures/db');
 
-const userOneId = new mongoose.Types.ObjectId();
-
-const userOne = {
-    _id: userOneId,
-    name: 'Mike Jones',
-    email: 'mike@mike.com',
-    password: '567What!!!',
-    tokens: [{
-        token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
-    }]
-};
-
-beforeEach(async () => {
-    await User.deleteMany(); //no arguments means that it deletes all records
-    await new User(userOne).save();
-});
+beforeEach(setupDatabase);
 
 test('Should sign up a new user', async () => {
     const response = await request(app).post('/users').send({
@@ -117,10 +101,43 @@ test('Should upload an avatar image', async () => {
     await request(app)
         .post('/users/me/avatar')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
-        .attach('avatar', 'tests/fixtures/profile-pic.jpg');
-
-    expect(200);
+        .attach('avatar', 'tests/fixtures/profile-pic.jpg')
+        .expect(200);
 
     const user = await User.findById(userOneId)
-    expect(user.avatar).toEqual(expect.any(Number));
+    expect(user.avatar).toEqual(expect.any(Buffer));
+})
+
+test('Should update valid user fields', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            name: "John Doe",
+            email: "John@example.com"
+        })
+        .expect(200);
+
+    const user = await User.findById(userOneId);
+    expect(user.name).toBe('John Doe');
+    expect(user.email).toBe('john@example.com');
+})
+
+test('Should fail to update invalid field', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            location: "Nowhere"
+        })
+        .expect(400);
+})
+
+test('Should fail to update valid field on unauthorized user', async () => {
+    await request(app)
+        .patch('/users/me')
+        .send({
+            name: "Bob"
+        })
+        .expect(401);
 })
