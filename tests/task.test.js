@@ -71,6 +71,15 @@ test('Should not create task with invalid description/completed', async () => {
             description: ""
         })
         .expect(400);
+
+    //Invalid completed
+    await request(app)
+        .post('/tasks')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            completed: 'maybe'
+        })
+        .expect(400);
 })
 
 
