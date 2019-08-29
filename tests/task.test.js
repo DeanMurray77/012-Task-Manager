@@ -2,9 +2,16 @@ const request = require('supertest');
 const app = require('../src/app');
 const Task = require('../src/models/task');
 
-const { userOne, userOneId, userTwo, userTwoId, 
-        taskOne, taskTwo, taskThree, setupDatabase
-    } = require('./fixtures/db');
+const {
+    userOne,
+    userOneId,
+    userTwo,
+    userTwoId, 
+    taskOne,
+    taskTwo,
+    taskThree,
+    setupDatabase
+} = require('./fixtures/db');
 
 beforeEach(setupDatabase);
 
@@ -54,3 +61,20 @@ test("Should delete userOne's task while correctly authenticated", async () => {
     expect(task).toBeNull();
     expect(response.body._id).toEqual(taskOne._id.toString());
 })
+
+
+//
+// Task Test Ideas
+//
+// Should not create task with invalid description/completed
+// Should not update task with invalid description/completed
+// Should delete user task
+// Should not delete task if unauthenticated
+// Should not update other users task
+// Should fetch user task by id
+// Should not fetch user task by id if unauthenticated
+// Should not fetch other users task by id
+// Should fetch only completed tasks
+// Should fetch only incomplete tasks
+// Should sort tasks by description/completed/createdAt/updatedAt
+// Should fetch page of tasks
