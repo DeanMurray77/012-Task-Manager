@@ -127,10 +127,24 @@ test("Should not update other users task", async () => {
     expect(task.description).not.toEqual('Something New')
 })
 
+test('Should fetch user task by id', async () => {
+    const response = await request(app)
+        .get(`/tasks/${taskOne._id}`)
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200);
+
+    expect(response.body).toMatchObject({
+        completed: false,
+        _id: taskOne._id.toString(),
+        description: "First task from prepopulated data",
+        owner: userOneId.toString()
+    });
+})
 
 // Task Test Ideas
 // 
-// Should fetch user task by id
+// 
 // Should not fetch user task by id if unauthenticated
 // Should not fetch other users task by id
 // Should fetch only completed tasks
