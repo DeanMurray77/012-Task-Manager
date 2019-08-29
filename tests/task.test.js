@@ -82,11 +82,30 @@ test('Should not create task with invalid description/completed', async () => {
         .expect(400);
 })
 
+test("Should not update task with invalid description/completed", async () => {
+    //Invalid (Missing) description
+    await request(app)
+        .patch('/tasks/' + taskOne._id)
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            description: ""
+        })
+        .expect(400)
+
+    //Invalid complete
+    await request(app)
+        .patch('/tasks/' + taskOne._id)
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            completed: "Yes"
+        })
+        .expect(400)
+})
 
 //
 // Task Test Ideas
 //
-// Should not update task with invalid description/completed
+// 
 // Should delete user task
 // Should not delete task if unauthenticated
 // Should not update other users task
