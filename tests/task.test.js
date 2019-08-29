@@ -62,6 +62,16 @@ test("Should delete userOne's task while correctly authenticated", async () => {
     expect(response.body._id).toEqual(taskOne._id.toString());
 })
 
+test("Should fail to delete userOne's task while not authenticated", async () => {
+    await request(app)
+        .delete('/tasks/' + taskOne._id)
+        .send()
+        .expect(401)
+
+    const task = await Task.findById(taskOne._id);
+    expect(task).not.toBeNull();
+})
+
 test('Should not create task with invalid description/completed', async () => {
     //Missing description
     await request(app)
@@ -105,8 +115,6 @@ test("Should not update task with invalid description/completed", async () => {
 //
 // Task Test Ideas
 //
-// 
-// Should delete user task
 // Should not delete task if unauthenticated
 // Should not update other users task
 // Should fetch user task by id
