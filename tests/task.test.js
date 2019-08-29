@@ -112,11 +112,24 @@ test("Should not update task with invalid description/completed", async () => {
         .expect(400)
 })
 
-//
+test("Should not update other users task", async () => {
+    //Invalid (Missing) description
+    await request(app)
+        .patch('/tasks/' + taskOne._id)
+        .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+        .send({
+            description: "Something New"
+        })
+        .expect(404)
+
+    //Confirm database hasn't been changed...
+    const task = await Task.findById(taskOne._id)
+    expect(task.description).not.toEqual('Something New')
+})
+
+
 // Task Test Ideas
-//
-// Should not delete task if unauthenticated
-// Should not update other users task
+// 
 // Should fetch user task by id
 // Should not fetch user task by id if unauthenticated
 // Should not fetch other users task by id
