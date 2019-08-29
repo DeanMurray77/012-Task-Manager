@@ -142,11 +142,70 @@ test('Should fail to update valid field on unauthorized user', async () => {
         .expect(401);
 })
 
+test('Should fail to signup user with invalid name/email/password', async () => {
+    //Invalid (missing) name:
+    await request(app)
+        .post('/users')
+        .send({
+            name: "",
+            email: "dave@example.com",
+            password: "ThisIsAValidPass123##$"
+        })
+        .expect(400);
 
+    //Invalid email:
+    await request(app)
+        .post('/users')
+        .send({
+            name: "Bob Johnson",
+            email: "Bob@Bob@Bob",
+            password: "ThisIsAValidPass123##$"
+        })
+        .expect(400);
+
+    //Missing email:
+    await request(app)
+        .post('/users')
+        .send({
+            name: "Bob Johnson",
+            email: "",
+            password: "ThisIsAValidPass123##$"
+        })
+        .expect(400);
+
+    //Missing password:
+    await request(app)
+        .post('/users')
+        .send({
+            name: "David Nameless",
+            email: "dave@example.com",
+            password: ""
+        })
+        .expect(400);
+
+    //Invalid password (too short):
+    await request(app)
+        .post('/users')
+        .send({
+            name: "David Nameless",
+            email: "dave@example.com",
+            password: "aoeuid"
+        })
+        .expect(400);
+
+    //Invalid password (contains 'password'):
+    await request(app)
+        .post('/users')
+        .send({
+            name: "David Nameless",
+            email: "dave@example.com",
+            password: "Password12345%$#"
+        })
+        .expect(400);
+})
 
 // User Test Ideas
 //
-// Should not signup user with invalid name/email/password
 // Should not update user if unauthenticated
 // Should not update user with invalid name/email/password
 // Should not delete user if unauthenticated
