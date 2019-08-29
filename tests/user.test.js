@@ -204,8 +204,58 @@ test('Should fail to signup user with invalid name/email/password', async () => 
         .expect(400);
 })
 
-// User Test Ideas
-//
-// Should not update user if unauthenticated
-// Should not update user with invalid name/email/password
-// Should not delete user if unauthenticated
+test('Should not update user with invalid name/email/password', async () => {
+    //Invalid (missing name)
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            name: ""
+        })
+        .expect(400)
+
+    //Missing password
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            password: ""
+        })
+        .expect(400)
+
+    //Invalid password (too short)
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            password: "aoeuid"
+        })
+        .expect(400)
+
+     //Invalid password (contains 'password')
+     await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            password: "Password1234@#$"
+        })
+        .expect(400)
+
+     //Missing email
+     await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            email: ""
+        })
+        .expect(400)
+
+    //Invalid email
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            email: "aoeuid.com"
+        })
+        .expect(400)
+})
