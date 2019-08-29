@@ -62,11 +62,21 @@ test("Should delete userOne's task while correctly authenticated", async () => {
     expect(response.body._id).toEqual(taskOne._id.toString());
 })
 
+test('Should not create task with invalid description/completed', async () => {
+    //Missing description
+    await request(app)
+        .post('/tasks')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            description: ""
+        })
+        .expect(400);
+})
+
 
 //
 // Task Test Ideas
 //
-// Should not create task with invalid description/completed
 // Should not update task with invalid description/completed
 // Should delete user task
 // Should not delete task if unauthenticated
