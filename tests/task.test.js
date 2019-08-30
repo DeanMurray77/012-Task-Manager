@@ -149,11 +149,19 @@ test('Should not fetch user task by id if not authenticated', async () => {
         .expect(401);
 })
 
+test('Should not fetch other users task by id', async () => {
+    const response = await request(app)
+        .get(`/tasks/${taskThree._id}`)
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(404);
+})
+
 // Task Test Ideas
 // 
 // 
-// Should not fetch user task by id if unauthenticated
-// Should not fetch other users task by id
+
+// 
 // Should fetch only completed tasks
 // Should fetch only incomplete tasks
 // Should sort tasks by description/completed/createdAt/updatedAt
