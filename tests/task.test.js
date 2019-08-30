@@ -142,6 +142,13 @@ test('Should fetch user task by id', async () => {
     });
 })
 
+test('Should not fetch user task by id if not authenticated', async () => {
+    const response = await request(app)
+        .get(`/tasks/${taskOne._id}`)
+        .send()
+        .expect(401);
+})
+
 // Task Test Ideas
 // 
 // 
