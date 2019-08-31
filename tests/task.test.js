@@ -10,6 +10,8 @@ const {
     taskOne,
     taskTwo,
     taskThree,
+    taskFour,
+    taskFive,
     setupDatabase
 } = require('./fixtures/db');
 
@@ -29,14 +31,14 @@ test('Create a task', async () => {
     expect(task.completed).toEqual(false);
 })
 
-test('Get all tasks (2) for userOne', async () => {
+test('Get all tasks (4) for userOne', async () => {
     const response = await request(app)
         .get('/tasks')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
 
-    expect(response.body.length).toBe(2);
+    expect(response.body.length).toBe(4);
 })
 
 test("Should fail to delete userOne's task while logged in as userTwo", async () => {
@@ -155,6 +157,18 @@ test('Should not fetch other users task by id', async () => {
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(404);
+})
+
+test('Should fetch only incomplete tasks & sort by description', async () => {
+    const response = await request(app)
+        .get('/tasks?completed=false&sortBy=description_desc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200);
+
+    expect(response.body.length).toBe(2)
+    expect(response.body[0]._id).toBe(taskFour._id.toString());
+    expect(response.body[1]._id).toBe(taskOne._id.toString());
 })
 
 // Task Test Ideas

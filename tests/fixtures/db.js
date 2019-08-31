@@ -46,6 +46,20 @@ const taskThree = {
     owner: userTwo._id
 }
 
+const taskFour = {
+    _id: new mongoose.Types.ObjectId(),
+    description: "Fourth task from prepopulated data",
+    completed: false,
+    owner: userOneId
+}
+
+const taskFive = {
+    _id: new mongoose.Types.ObjectId(),
+    description: "Fifth task from prepopulated data",
+    completed: true,
+    owner: userOneId
+}
+
 const setupDatabase = async () => {
     await User.deleteMany(); //no arguments means that it deletes all records
     await Task.deleteMany();
@@ -54,6 +68,8 @@ const setupDatabase = async () => {
     await new Task(taskOne).save();
     await new Task(taskTwo).save();
     await new Task(taskThree).save();
+    await new Task(taskFour).save();
+    await new Task(taskFive).save();
 }
 
 module.exports = {
@@ -64,5 +80,7 @@ module.exports = {
     taskOne,
     taskTwo,
     taskThree,
+    taskFour,
+    taskFive,
     setupDatabase,
 }
