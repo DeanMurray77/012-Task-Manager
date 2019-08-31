@@ -183,7 +183,33 @@ test('Should fetch only completed tasks & sort by description (ascending)', asyn
     expect(response.body[1]._id).toBe(taskTwo._id.toString());
 })
 
+test('Should sort tasks by completed (ascending)', async () => {
+    const response = await request(app)
+        .get('/tasks?sortBy=completed_asc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
 
+    expect(response.body.length).toBe(4);
+    expect(response.body[0]._id).toBe(taskOne._id.toString());
+    expect(response.body[1]._id).toBe(taskFour._id.toString());
+    expect(response.body[2]._id).toBe(taskTwo._id.toString());
+    expect(response.body[3]._id).toBe(taskFive._id.toString());
+})
+
+test('Should sort tasks by completed (ascending)', async () => {
+    const response = await request(app)
+        .get('/tasks?sortBy=completed_desc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    expect(response.body.length).toBe(4);
+    expect(response.body[0]._id).toBe(taskTwo._id.toString());
+    expect(response.body[1]._id).toBe(taskFive._id.toString());
+    expect(response.body[2]._id).toBe(taskOne._id.toString());
+    expect(response.body[3]._id).toBe(taskFour._id.toString());
+})
 
 // Task Test Ideas
 // 
