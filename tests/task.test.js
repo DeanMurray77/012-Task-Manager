@@ -159,7 +159,7 @@ test('Should not fetch other users task by id', async () => {
         .expect(404);
 })
 
-test('Should fetch only incomplete tasks & sort by description', async () => {
+test('Should fetch only incomplete tasks & sort by description (descending)', async () => {
     const response = await request(app)
         .get('/tasks?completed=false&sortBy=description_desc')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
@@ -171,12 +171,22 @@ test('Should fetch only incomplete tasks & sort by description', async () => {
     expect(response.body[1]._id).toBe(taskOne._id.toString());
 })
 
+test('Should fetch only completed tasks & sort by description (ascending)', async () => {
+    const response = await request(app)
+        .get('/tasks?completed=true&sortBy=description_asc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200);
+
+    expect(response.body.length).toBe(2)
+    expect(response.body[0]._id).toBe(taskFive._id.toString());
+    expect(response.body[1]._id).toBe(taskTwo._id.toString());
+})
+
+
+
 // Task Test Ideas
 // 
 // 
-
-// 
-// Should fetch only completed tasks
-// Should fetch only incomplete tasks
 // Should sort tasks by description/completed/createdAt/updatedAt
 // Should fetch page of tasks
