@@ -31,3 +31,5 @@
     "supertest": "^4.0.2"
   }
 }
+// To launch the database for local development:{
+// /Users/deanmurray/mongodb/bin/mongod --dbpath=/Users/deanmurray/mongodb-data
