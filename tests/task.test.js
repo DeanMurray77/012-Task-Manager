@@ -197,7 +197,7 @@ test('Should sort tasks by completed (ascending)', async () => {
     expect(response.body[3]._id).toBe(taskFive._id.toString());
 })
 
-test('Should sort tasks by completed (ascending)', async () => {
+test('Should sort tasks by completed (descending)', async () => {
     const response = await request(app)
         .get('/tasks?sortBy=completed_desc')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
@@ -211,8 +211,21 @@ test('Should sort tasks by completed (ascending)', async () => {
     expect(response.body[3]._id).toBe(taskFour._id.toString());
 })
 
+test('Should sort tasks by createdAt', async () => {
+    const response = await request(app)
+        .get('/tasks?sortBy=createdAt_desc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    expect(response.body[0]._id).toBe(taskFive._id.toString());
+    expect(response.body[1]._id).toBe(taskFour._id.toString());
+    expect(response.body[2]._id).toBe(taskTwo._id.toString());
+    expect(response.body[3]._id).toBe(taskOne._id.toString());
+})
+
 // Task Test Ideas
 // 
 // 
-// Should sort tasks by description/completed/createdAt/updatedAt
+// Should sort tasks by createdAt/updatedAt
 // Should fetch page of tasks
