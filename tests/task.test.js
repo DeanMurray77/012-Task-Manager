@@ -263,6 +263,26 @@ test('Should sort tasks by updatedAt (descending)', async () => {
     expect(response.body[3]._id).toBe(taskOne._id.toString());
 })
 
-// Task Test Ideas
-// 
-// Should fetch page of tasks
+test('Should fetch a page of 2 tasks', async () => {
+    const response = await request(app)
+        .get('/tasks?limit=2')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200);
+
+    expect(response.body.length).toBe(2);
+    expect(response.body[0]._id).toBe(taskOne._id.toString());
+    expect(response.body[1]._id).toBe(taskTwo._id.toString());
+})
+
+test('Should fetch a page of 2 tasks, skipping the first two responses', async () => {
+    const response = await request(app)
+        .get('/tasks?limit=2&skip=2')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200);
+
+    expect(response.body.length).toBe(2);
+    expect(response.body[0]._id).toBe(taskFour._id.toString());
+    expect(response.body[1]._id).toBe(taskFive._id.toString());
+})
