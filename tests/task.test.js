@@ -211,7 +211,7 @@ test('Should sort tasks by completed (descending)', async () => {
     expect(response.body[3]._id).toBe(taskFour._id.toString());
 })
 
-test('Should sort tasks by createdAt', async () => {
+test('Should sort tasks by createdAt (descending)', async () => {
     const response = await request(app)
         .get('/tasks?sortBy=createdAt_desc')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
@@ -224,8 +224,45 @@ test('Should sort tasks by createdAt', async () => {
     expect(response.body[3]._id).toBe(taskOne._id.toString());
 })
 
+test('Should sort tasks by createdAt (ascending)', async () => {
+    const response = await request(app)
+        .get('/tasks?sortBy=createdAt_asc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    expect(response.body[0]._id).toBe(taskOne._id.toString());
+    expect(response.body[1]._id).toBe(taskTwo._id.toString());
+    expect(response.body[2]._id).toBe(taskFour._id.toString());
+    expect(response.body[3]._id).toBe(taskFive._id.toString());
+})
+
+test('Should sort tasks by updatedAt (ascending)', async () => {
+    const response = await request(app)
+        .get('/tasks?sortBy=updatedAt_asc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    expect(response.body[0]._id).toBe(taskOne._id.toString());
+    expect(response.body[1]._id).toBe(taskTwo._id.toString());
+    expect(response.body[2]._id).toBe(taskFour._id.toString());
+    expect(response.body[3]._id).toBe(taskFive._id.toString());
+})
+
+test('Should sort tasks by updatedAt (descending)', async () => {
+    const response = await request(app)
+        .get('/tasks?sortBy=updatedAt_desc')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    expect(response.body[0]._id).toBe(taskFive._id.toString());
+    expect(response.body[1]._id).toBe(taskFour._id.toString());
+    expect(response.body[2]._id).toBe(taskTwo._id.toString());
+    expect(response.body[3]._id).toBe(taskOne._id.toString());
+})
+
 // Task Test Ideas
 // 
-// 
-// Should sort tasks by createdAt/updatedAt
 // Should fetch page of tasks
